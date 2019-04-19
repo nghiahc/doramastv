@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libpng-dev \
     mysql-client \
+    git-all \
     sudo \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \

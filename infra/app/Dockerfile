@@ -23,6 +23,10 @@ RUN apt-get update && apt-get install -y \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer && \
 
+    #nodejs
+    curl -sL https://deb.nodesource.com/setup_8.x | bash && \
+    apt-get install -y nodejs && \
+
     # add user
     useradd -m -s /bin/bash -u 1000 drama
 

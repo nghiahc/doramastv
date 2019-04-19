@@ -1,0 +1,22 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Bootstrap
+@import '../../../node_modules/bootstrap/dist/css/bootstrap.css';
+
+// Global
+@import 'global';
+
+// Pages
+@import 'pages/dashboard';
+
+// Bootstrap Overrides
+@import 'custom';
+
+// Plugins
+
+/* */
+@import './plugins/font-awesome-4.7.0/scss/font-awesome';
+
+/* bootstrap-multiselect */
+@import '../../../node_modules/bootstrap-multiselect/dist/css/bootstrap-multiselect.css';

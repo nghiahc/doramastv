@@ -49,16 +49,11 @@ class SiteMap extends Command
             $sitemap->add(URL::to('/disclaimer'), Carbon::now(), '1.0', 'daily');
             $sitemap->add(URL::to('/404'), Carbon::now(), '1.0', 'daily');
 
-            $total = 4;
+            // add category
+            $sitemap->add(URL::to('/category/drama-1'), Carbon::now(), '0.9', 'daily');
+            $sitemap->add(URL::to('/category/movie-2'), Carbon::now(), '0.9', 'daily');
 
-            // get all category from db
-            $categories = MasterCategory::all()->sortBy('updated_at', SORT_DESC);
-
-            // add every category to the sitemap
-            foreach ($categories as $category) {
-                $total++;
-                $sitemap->add(URL::to('/category/' . $category->name_url), $category->updated_at, '0.9', 'daily');
-            }
+            $total = 6;
 
             $movies = Movie::where('is_active', 1)->orderBy('updated_at', 'desc')->get();
             foreach ($movies as $movie) {

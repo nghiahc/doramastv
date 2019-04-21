@@ -6,8 +6,8 @@ return [
          * The default configurations to be used by the meta generator.
          */
         'defaults'       => [
-            'title'       => "Watch online Korean drama, Chinese drama, Japanese drama, Anime, Asian movies 2019 with EngSub and download free on Eadrama",
-            'description' => 'Watch online Korean drama, Chinese drama, Japanese drama, Anime, Asian movies 2019 with EngSub and download free on Eadrama',
+            'title'       => "Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas",
+            'description' => 'Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas',
             'separator'   => ' - ',
             'keywords'    => [
                 'eadrama',
@@ -24,9 +24,9 @@ return [
                 'drama online',
                 'download'
             ],
-            'generator'   => 'Eadrama - Watch online asian drama, movies and shows with English subtitle in HD quality and download free.',
-            'copyright'   => 'Eadrama - Watch online asian drama, movies and shows with English subtitle in HD quality and download free.',
-            'author'      => 'Eadrama - Watch online asian drama, movies and shows with English subtitle in HD quality and download free.',
+            'generator'   => 'DoramasTV - Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas.',
+            'copyright'   => 'DoramasTV - Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas.',
+            'author'      => 'DoramasTV - Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas.',
             'canonical'   => false,
             // Set null for using Url::current(), set false to total remove
         ],
@@ -47,11 +47,11 @@ return [
          * The default configurations to be used by the opengraph generator.
          */
         'defaults' => [
-            'title'       => 'Watch online asian drama, movies and shows with English subtitle in HD quality and download free.',
-            'description' => 'Watch online Korean drama, Chinese drama, Japanese drama, Anime, Asian movies 2019 with EngSub and download free on Eadrama',
+            'title'       => 'Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas.',
+            'description' => 'Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas.',
             'url'         => null,
             'type'        => 'video.movie',
-            'site_name'   => 'Eadrama - Watch online asian drama, movies and shows with English subtitle in HD quality and download free.',
+            'site_name'   => 'DoramasTV - Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas.',
             'images'      => [],
         ],
     ],

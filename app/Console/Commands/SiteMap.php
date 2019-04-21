@@ -55,13 +55,13 @@ class SiteMap extends Command
 
             $total = 6;
 
-            $movies = Movie::where('is_active', 1)->orderBy('updated_at', 'desc')->get();
+            $movies = Movie::all()->orderBy('updated_at', 'desc')->get();
             foreach ($movies as $movie) {
                 $total++;
                 $sitemap->add(URL::to('/movie/' . $movie->name_url), $movie->updated_at, '0.9', 'daily');
             }
 
-            $episodes = Episode::where('is_active', 1)->orderBy('updated_at', 'desc')->get();
+            $episodes = Episode::all()->orderBy('updated_at', 'desc')->get();
             foreach ($episodes as $episode) {
                 $total++;
                 $sitemap->add(URL::to('/play/' . $episode->name_url), $episode->updated_at, '0.9', 'daily');

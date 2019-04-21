@@ -31,7 +31,6 @@ class MovieRepository
     {
         return $this
             ->model
-            ->where('is_active', 1)
             ->get();
     }
 
@@ -143,30 +142,6 @@ class MovieRepository
             ->offset($offset)
             ->limit($limit)
             ->get();
-    }
-
-    /**
-     * @param int  $categoryId
-     * @param null $year
-     * @param null $company
-     * @return int
-     */
-    public function getTotalByCondition($categoryId, $year = null, $company = null)
-    {
-        $query = $this
-            ->model
-            ->where('category_id', $categoryId)
-            ->where('is_active', 1);
-        if ($year) {
-            $query->where('release_date', 'like', '%' . $year . '%');
-        }
-        if ($company) {
-            $query->where('company', $company);
-        }
-
-        return $query
-            ->get()
-            ->count();
     }
 
     /**

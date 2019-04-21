@@ -10,7 +10,7 @@ return [
             'description' => 'Ver doramas Coreanos en español online, Chinos doramas, Japonese doramas',
             'separator'   => ' - ',
             'keywords'    => [
-                'eadrama',
+                'doramastv',
                 'best streaming movie',
                 'drama eng sub',
                 'korean drama',

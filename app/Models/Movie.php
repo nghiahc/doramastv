@@ -80,7 +80,7 @@ class Movie extends Model
     public function getTitleNonAsciiAttribute()
     {
         $regex              = '/[^a-zA-Z0-9\p{Han}\p{Hangul}\p{Hiragana}\p{Katakana}+]/u';
-        $nonAsciiCleaned    = preg_replace($regex, ' ', trim(strtolower($this->title)));
+        $nonAsciiCleaned    = preg_replace($regex, ' ', trim(strtolower($this->name)));
         $multiSpacesCleaned = preg_replace('/\s+/m', ' ', $nonAsciiCleaned);
 
         return str_replace(' ', '-', trim($multiSpacesCleaned));

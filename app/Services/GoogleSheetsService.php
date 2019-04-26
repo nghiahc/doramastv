@@ -27,7 +27,7 @@ class GoogleSheetsService
         try {
             $client = new \Google_Client();
 
-            $client->setApplicationName('Eadrama APP');
+            $client->setApplicationName('DoramasTV APP');
             $client->setScopes([\Google_Service_Sheets::SPREADSHEETS]);
             $client->setAccessType('offline');
             $client->setAuthConfig(storage_path('token.json'));

@@ -86,5 +86,8 @@
     @stack('after-scripts')
 
     @include('includes.partials.ga')
+    <div class="maintenance">
+        <img src="{{ asset('img/frontend/maintenance.jpg') }}">
+    </div>
     </body>
     </html>

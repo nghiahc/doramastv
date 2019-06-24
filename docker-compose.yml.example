@@ -1,11 +1,19 @@
-version: '3'
+version: '3.4'
 services:
   app:
-    build: ./infra/app
+    build:
+        context: ./infra/app
+        dockerfile: ./Dockerfile
+        network: host
+        restart: always
     volumes:
       - ./:/var/www
   web:
-    build: ./infra/web
+    build:
+        context: ./infra/web
+        dockerfile: ./Dockerfile
+        network: host
+        restart: always
     ports:
       - "80:80"
     volumes:

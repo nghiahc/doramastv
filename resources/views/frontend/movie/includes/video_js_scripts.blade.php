@@ -1,8 +1,9 @@
 <script type="text/javascript">
 
     const divPlayer = $('#player');
-    const vbWidth   = divPlayer.width();
-    const vbHeight  = vbWidth / 16 * 9;
+    const serverh   = $('.footer').height();
+    let vbHeight    = $(window).height() - serverh - 20;
+    const vbWidth   = $(window).width();
     const vastOrder = 'post';
     const vastInput = $('input[name="vast-tag"]');
     const vastTag   = vastInput.length !== 0 ? vastInput.val() : '';
@@ -92,12 +93,6 @@
                 // vb_adValid();
             });
 
-            $(window).resize(function () {
-                const vbWidth  = $('.left-content-player').width();
-                const vbHeight = vbWidth / 16 * 9;
-                player.resize(vbWidth, vbHeight);
-            });
-
             // player.on("time", function (e) {
             //     vb_jw_error     = 3;
             //     vb_jw_mp4_error = 0;
@@ -140,10 +135,19 @@
             generateHtmlService.init(videoSources);
             playerService.init(videoSources, videoName + '.mp4', null, 0);
             socialAction.init();
+
+            $(window).on('resize', function () {
+                resize();
+            });
         }
     });
 
     // PRIVATE FUNCTION
+
+    function resize() {
+        vbHeight = $(window).height() - serverh - 20;
+        $("#player").height(vbHeight);
+    }
 
     function buildPlayerSource(videoSource, index) {
         const source = videoSource[index];

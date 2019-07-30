@@ -109,6 +109,70 @@ class MovieController extends Controller
         $siteName = env('SITE_NAME');
         if ($isMovie) {
             $title     = "Ver {$movie->name} sin anuncios | {$siteName}";
+        }
+        else {
+            $title     = "Ver {$movie->name} - Capítulo {$episode->name} sin anuncios | {$siteName}";
+        }
+
+        // build keywords
+        $keywords   = array_map(
+            function ($keyword) {
+                return trim($keyword);
+            },
+            explode('-', trim($movie->name))
+        );
+        $keywords[] = trim($movie->genres);
+        $keywords[] = $title;
+        array_unshift($keywords, 'Ver en linea ' . $keywords[0], 'ver en linea gratis', 'descargar gratis');
+        $description = implode(', ', $keywords) . ', ' . SEOMeta::getDescription();
+
+        SEOMeta::setTitleDefault($title);
+        SEOMeta::setDescription($description);
+        SEOMeta::setKeywords(array_merge($keywords, SEOMeta::getKeywords()));
+
+        OpenGraph::setTitle($title);
+        OpenGraph::setDescription($description);
+        OpenGraph::addImage($movie->thumb_url);
+
+        $tags = $this->buildTags($movie, $isMovie, $episode->name, $lastEpisode->name);
+
+        return view(
+            'frontend.movie.play',
+            [
+                'title'            => $title,
+                'movie'            => $movie,
+                'episodeWatchList' => $episodeWatchList,
+                'current_episode'  => $episode,
+                'tags'             => $tags,
+                'isMovie'          => $isMovie,
+                'categoryName'     => $categoryName,
+                'categoryUrl'      => route('frontend.category.index', "{$categoryName}-{$movie->movie_type}"),
+                'hostingUrl'       => $this->fetchHostingListUrl(),
+            ]
+        );
+    }
+
+    /**
+     * @param $episodeNameId
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function video($episodeNameId)
+    {
+        $episodeId        = $this->getIdFromUrl($episodeNameId);
+        $episode          = $this->episodeRepository->fetchById($episodeId);
+        $movie            = $this->movieRepository->fetchById($episode->movie_id);
+        $episodeWatchList = $this->episodeRepository->fetchAllByMovieIdAndLimit(
+            $episode->movie_id,
+            self::LIMIT_EPISODE_SHOW_WATCH
+        );
+        $isMovie          = (count($movie->episodes) === 1) & ($episode->name == 0);
+        $lastEpisode      = $this->episodeRepository->fetchAllByMovieId($episode->movie_id)->last();
+        $categoryName     = Movie::$movieTypes[$movie->movie_type];
+
+        // build title
+        $siteName = env('SITE_NAME');
+        if ($isMovie) {
+            $title     = "Ver {$movie->name} sin anuncios | {$siteName}";
             $videoName = $movie->name;
         }
         else {
@@ -139,7 +203,7 @@ class MovieController extends Controller
         $tags = $this->buildTags($movie, $isMovie, $episode->name, $lastEpisode->name);
 
         return view(
-            'frontend.movie.play',
+            'frontend.movie.video',
             [
                 'title'            => $title,
                 'movie'            => $movie,
@@ -270,5 +334,24 @@ class MovieController extends Controller
         }
 
         return $results;
+    }
+
+    /**
+     * @return string
+     */
+    private function fetchHostingListUrl()
+    {
+        $baseUrl = env('HOSTING_RANK_URL');
+
+        $paths = [
+            'cheap-web-hosting/',
+            'how-we-rank-web-hosts/',
+            'resources/',
+            'website-builders/',
+            'reviews/bluehost/',
+            'reviews/hostgator-cloud/',
+        ];
+
+        return $baseUrl . $paths[array_rand($paths)];
     }
 }

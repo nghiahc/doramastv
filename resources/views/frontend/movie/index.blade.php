@@ -7,7 +7,7 @@
     </div>
 
     <div class="poster">
-        <a itemprop="url" href="{{ route('frontend.play.index', $episode->name_url) }}"
+        <a itemprop="url" href="{{ $episode ? route('frontend.play.index', $episode->name_url) : '#' }}"
            title="Ver {{ $movie->name }}">
             <img title="Ver {{ $movie->name }}" src="{{ $movie->thumb_url }}" alt="{{ $movie->name }}"
                  itemprop="image">
@@ -95,7 +95,7 @@
                 @if($isShowMore)
                     <li class="show-more">
                         <div class="watch-item">
-                            <a href="{{ route('frontend.play.index', $episode->name_url) }}"
+                            <a href="{{ $episode ? route('frontend.play.index', $episode->name_url) : '#' }}"
                                title="Ver {{ $movie->name }}"><b>Mostrar más ...</b>
                             </a>
                         </div>

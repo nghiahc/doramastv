@@ -51,7 +51,12 @@ class MovieController extends Controller
             $movieId,
             self::LIMIT_EPISODE_SHOW_WATCH
         );
-        $isMovie          = (count($movie->episodes) === 1) & ($episode->name == 0);
+        if ($episode) {
+            $isMovie = (count($movie->episodes) === 1) & ($episode->name == 0);
+        }
+        else {
+            $isMovie = true;
+        }
 
         $keywords     = array_map(
             function ($keyword) {
@@ -79,7 +84,7 @@ class MovieController extends Controller
                 'movie'            => $movie,
                 'episode'          => $episode,
                 'episodeWatchList' => $episodeWatchList,
-                'isShowMore'       => count($movie->episodes) > self::LIMIT_EPISODE_SHOW_WATCH,
+                'isShowMore'       => $episode ? count($movie->episodes) > self::LIMIT_EPISODE_SHOW_WATCH : false,
                 'isMovie'          => $isMovie,
                 'tags'             => $this->buildTags($movie, $isMovie),
                 'categoryName'     => $categoryName,
@@ -108,10 +113,10 @@ class MovieController extends Controller
         // build title
         $siteName = env('SITE_NAME');
         if ($isMovie) {
-            $title     = "Ver {$movie->name} sin anuncios | {$siteName}";
+            $title = "Ver {$movie->name} sin anuncios | {$siteName}";
         }
         else {
-            $title     = "Ver {$movie->name} - Capítulo {$episode->name} sin anuncios | {$siteName}";
+            $title = "Ver {$movie->name} - Capítulo {$episode->name} sin anuncios | {$siteName}";
         }
 
         // build keywords

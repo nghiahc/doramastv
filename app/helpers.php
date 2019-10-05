@@ -219,3 +219,15 @@ if (!function_exists('getNewMoviesForSidebar')) {
         return app()->make(\App\Helpers\General\Movie::class)->getNewMoviesForSidebar();
     }
 }
+
+if (!function_exists('encryptDecrypt')) {
+    /**
+     * @param $action
+     * @param $string
+     * @return bool|string
+     */
+    function encryptDecrypt($action, $string)
+    {
+        return app()->make(\App\Helpers\General\HtmlHelper::class)->encryptDecrypt($action, $string);
+    }
+}

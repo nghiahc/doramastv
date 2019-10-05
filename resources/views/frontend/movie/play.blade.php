@@ -8,9 +8,18 @@
 
     <div class="player player-small embed-responsive embed-responsive-16by9">
         <div id="box-player" class="box-player" style="max-width: 100%;">
-            <a target="_blank" href="{{ $hostingUrl }}">
-                <img class="" src="{{ asset('img/frontend/video_player.png') }}" alt="" width="100%" height="500">
-            </a>
+            <form action="{{ $hostingUrl }}" method="POST" target="_blank">
+                <input type="hidden" name="{{ encryptDecrypt('encrypt', 'back_url') }}"
+                       value="{{ encryptDecrypt('encrypt', url()->current()) }}">
+                <input type="hidden" name="{{ encryptDecrypt('encrypt', 'video_url') }}"
+                       value="{{ encryptDecrypt('encrypt', route('frontend.video.index', $current_episode->id)) }}">
+                <input type="hidden" name="{{ encryptDecrypt('encrypt', 'back_label') }}"
+                       value="{{ encryptDecrypt('encrypt', 'Volver a la Lista de Episodios') }}">
+                <a href="#" class="redirect-movie">
+                    <img class="" src="{{ asset('img/frontend/video_player.png') }}" alt="" width="100%"
+                         height="500">
+                </a>
+            </form>
         </div>
     </div>
 
@@ -82,4 +91,7 @@
         <h4>@php echo implode(', ', $tags); @endphp</h4>
     </div>
 
+    @push('after-scripts')
+        @include('frontend.movie.includes.redirect_js_scripts')
+    @endpush
 @endsection

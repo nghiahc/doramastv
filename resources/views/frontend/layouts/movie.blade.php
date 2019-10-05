@@ -28,6 +28,7 @@
         {!! Twitter::generate() !!}
 
         <meta name="type" content="website">
+        <meta name="referrer" content="no-referrer">
 
         @yield('meta')
 

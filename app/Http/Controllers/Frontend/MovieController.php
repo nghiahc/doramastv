@@ -348,6 +348,10 @@ class MovieController extends Controller
             'how-we-rank-web-hosts/',
             'resources/',
             'website-builders/',
+            'advertiser-disclosure/',
+            'terms-of-usage/',
+            'privacy-policy/',
+            'about/',
             'reviews/bluehost/',
             'reviews/hostgator-cloud/',
         ];

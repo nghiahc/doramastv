@@ -146,4 +146,29 @@ class HtmlHelper
     {
         return new HtmlString($html);
     }
+
+    /**
+     * @param $action
+     * @param $string
+     * @return bool|string
+     */
+    public function encryptDecrypt($action, $string)
+    {
+        $output       = false;
+        $cipherMethod = 'aes-128-ctr';
+        $encKey       = '25c6c7ff35b9979b151f2136cd13b0ff';
+        $encIv        = '254f830c42c937fb7e1e2444c632a8a4';
+
+        $key = hash('sha256', $encKey);
+        $iv  = substr(hash('sha256', $encIv), 0, 16);
+
+        if ($action == 'encrypt') {
+            $output = openssl_encrypt($string, $cipherMethod, $key, 0, $iv);
+        }
+        else if ($action == 'decrypt') {
+            $output = openssl_decrypt($string, $cipherMethod, $key, 0, $iv);
+        }
+
+        return $output;
+    }
 }

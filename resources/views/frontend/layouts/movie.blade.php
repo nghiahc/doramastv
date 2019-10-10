@@ -87,5 +87,7 @@
     @stack('after-scripts')
 
     @include('includes.partials.ga')
+    @include('frontend.includes.ads.overlay')
+
     </body>
     </html>

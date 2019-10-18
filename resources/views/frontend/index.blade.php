@@ -3,7 +3,6 @@
 @section('content')
     <div class="container" style="min-height: 180px;">
         @include('frontend.includes.slider')
-        @include('frontend.includes.ads.native')
 
         <div class="col-md-12">
             <div class="wpb_wrapper">

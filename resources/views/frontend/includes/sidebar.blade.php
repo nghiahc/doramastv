@@ -1,8 +1,4 @@
 <div class="widget mars-posts-sidebar-widget">
-    @include('frontend.includes.ads.banner')
-</div>
-
-<div class="widget mars-posts-sidebar-widget">
     <h4 class="widget-title">La última actualización</h4>
     <div class="row">
         @foreach(getNewEpisodesForSidebar() as $episode)

@@ -74,8 +74,6 @@
         <div id="disqus_thread"></div>
     </div>
 
-    @include('frontend.includes.ads.native')
-
     <div class="video-details">
         @if($tags)
             <span class="meta">

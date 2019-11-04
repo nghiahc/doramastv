@@ -349,16 +349,13 @@ class MovieController extends Controller
         $baseUrl = env('HOSTING_RANK_URL');
 
         $paths = [
-            'cheap-web-hosting/',
-            'how-we-rank-web-hosts/',
-            'resources/',
-            'website-builders/',
-            'advertiser-disclosure/',
-            'terms-of-usage/',
-            'privacy-policy/',
-            'about/',
-            'reviews/bluehost/',
-            'reviews/hostgator-cloud/',
+            '4d-results/',
+            'east-4d-results/',
+            'singapore-4d-results/',
+            'past-results/',
+            'estimated-jackpot/',
+            'malaysia-prize-structure/',
+            'singapore-prize-structure/',
         ];
 
         return $baseUrl . $paths[array_rand($paths)];

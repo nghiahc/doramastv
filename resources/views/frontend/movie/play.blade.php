@@ -8,26 +8,12 @@
 
     <div class="player player-small embed-responsive embed-responsive-16by9">
         <div id="box-player" class="box-player" style="max-width: 100%;">
-            <form action="{{ $hostingUrl }}" method="POST" target="_blank">
-                <input type="hidden" name="{{ encryptDecrypt('encrypt', 'back_url') }}"
-                       value="{{ encryptDecrypt('encrypt', url()->current()) }}">
-                <input type="hidden" name="{{ encryptDecrypt('encrypt', 'video_url') }}"
-                       value="{{ encryptDecrypt('encrypt', route('frontend.video.index', $current_episode->id)) }}">
-                <input type="hidden" name="{{ encryptDecrypt('encrypt', 'back_label') }}"
-                       value="{{ encryptDecrypt('encrypt', 'Volver a la Lista de Episodios') }}">
-                <a href="#" class="redirect-movie">
-                    <img class="" src="{{ asset('img/frontend/video_player.png') }}" alt="" width="100%"
-                         height="500">
-                </a>
-            </form>
+            <div id="player"></div>
         </div>
     </div>
 
     <div class="video-actions">
-        <div class="server-list">
-            <button class="video-server-btn active" id="video-server-0" data-id="0">Servidor 1</button>
-            <button class="video-server-btn" id="video-server-1" data-id="1">Servidor 2</button>
-        </div>
+        <div class="server-list"></div>
         <div class="social-share-buttons">
             {!! (string) Share::currentPage($title, [], "<span><img src=" . asset('img/frontend/social/facebook.png') . ">", '</span>')->facebook() !!}
             {!! (string) Share::currentPage($title, [], "<span><img src=" . asset('img/frontend/social/twitter.png') . ">", '</span>')->twitter() !!}
@@ -91,7 +77,23 @@
         <h4>@php echo implode(', ', $tags); @endphp</h4>
     </div>
 
+    <input type="hidden" name="video-sources" value="{{ $videoSources }}">
+    <input type="hidden" name="video-name" value="{{ $videoName }}">
+    <input type="hidden" name="vast-tag" value="{{ $vastTag }}">
+
     @push('after-scripts')
-        @include('frontend.movie.includes.redirect_js_scripts')
+        <script type="text/javascript" src="{{ asset('js/jwplayer-8.6.2/jwplayer.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jwplayer-8.6.2/related.js') }}"></script>
+        @if($agent->browser() === 'Safari')
+            <script type="text/javascript"
+                    src="{{ asset('js/jwplayer-8.6.2/jwplayer.core.controls.polyfills.html5.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jwplayer-8.6.2/provider.airplay.js') }}"></script>
+        @else
+            <script type="text/javascript"
+                    src="{{ asset('js/jwplayer-8.6.2/jwplayer.core.controls.html5.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/jwplayer-8.6.2/provider.cast.js') }}"></script>
+        @endif
+        @include('frontend.movie.includes.play_js_scripts')
     @endpush
+
 @endsection

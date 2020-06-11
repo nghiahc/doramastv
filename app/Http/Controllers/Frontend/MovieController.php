@@ -110,8 +110,7 @@ class MovieController extends Controller
         if ($isMovie) {
             $title     = "Ver {$movie->name} sin anuncios | {$siteName}";
             $videoName = $movie->name;
-        }
-        else {
+        } else {
             $title     = "Ver {$movie->name} - Capítulo {$episode->name} sin anuncios | {$siteName}";
             $videoName = $movie->name . ' - Capítulo ' . $episode->name;
         }
@@ -136,7 +135,8 @@ class MovieController extends Controller
         OpenGraph::setDescription($description);
         OpenGraph::addImage($movie->thumb_url);
 
-        $tags = $this->buildTags($movie, $isMovie, $episode->name, $lastEpisode->name);
+        $tags    = $this->buildTags($movie, $isMovie, $episode->name, $lastEpisode->name);
+        $sources = $this->getNewSource(json_decode($episode->source), $episode->clone_url);
 
         return view(
             'frontend.movie.play',
@@ -145,7 +145,7 @@ class MovieController extends Controller
                 'movie'            => $movie,
                 'episodeWatchList' => $episodeWatchList,
                 'current_episode'  => $episode,
-                'videoSources'     => base64_encode($episode->source),
+                'videoSources'     => base64_encode($sources),
                 'videoName'        => $videoName,
                 'vastTag'          => '',
                 'tags'             => $tags,
@@ -218,8 +218,7 @@ class MovieController extends Controller
             if ($episodeName) {
                 $tags[] = "{$movie->name} capítulo {$episodeName}";
                 $tags[] = "{$movie->name} cap {$episodeName}";
-            }
-            else {
+            } else {
                 $tags[] = $movie->name . ' capítulo 1';
                 $tags[] = $movie->name . ' cap 1';
             }
@@ -270,5 +269,33 @@ class MovieController extends Controller
         }
 
         return $results;
+    }
+
+    /**
+     * @param $oldSources
+     * @return string
+     */
+    protected function getNewSource($oldSources, $cloneUrl)
+    {
+        if (isset($oldSources[0])) {
+            $url      = $oldSources[0]->file;
+            $cloneUrl = base64_encode($cloneUrl);
+
+            try {
+                $response = \Curl::to($url)->get();
+                if (strpos($response, 'AccessDenied') !== false) {
+                    $response = \Curl::to("http://52.67.13.185/episodeinfo/{$cloneUrl}")->get();
+
+                    return json_decode($response)->source;
+                } else {
+                    return $oldSources;
+                }
+
+            } catch (\Exception $e) {
+                return $oldSources;
+            }
+        }
+
+        return $oldSources;
     }
 }

@@ -136,7 +136,7 @@ class MovieController extends Controller
         OpenGraph::addImage($movie->thumb_url);
 
         $tags    = $this->buildTags($movie, $isMovie, $episode->name, $lastEpisode->name);
-        $sources = $this->getNewSource(json_decode($episode->source), $episode->clone_url);
+        $sources = $this->getNewSource($episode->source, $episode->clone_url);
 
         return view(
             'frontend.movie.play',
@@ -277,8 +277,9 @@ class MovieController extends Controller
      */
     protected function getNewSource($oldSources, $cloneUrl)
     {
-        if (isset($oldSources[0])) {
-            $url      = $oldSources[0]->file;
+        $sources = json_decode($oldSources);
+        if (isset($sources[0])) {
+            $url      = $sources[0]->file;
             $cloneUrl = base64_encode($cloneUrl);
 
             try {

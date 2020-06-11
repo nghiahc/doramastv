@@ -285,7 +285,7 @@ class MovieController extends Controller
             try {
                 $response = \Curl::to($url)->get();
                 if (strpos($response, 'AccessDenied') !== false
-                    || strpos($response, 'ExpiredToken' !== false)
+                    || strpos($response, 'ExpiredToken') !== false
                 ) {
                     $response = \Curl::to("http://52.67.13.185/episodeinfo/{$cloneUrl}")->get();
 
